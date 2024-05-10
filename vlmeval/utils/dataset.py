@@ -159,6 +159,24 @@ class TSVDataset(CustomPrompt):
             if len(options):
                 prompt += options_prompt
                 prompt += 'Please select the correct answer from the options above. \n'
+        elif DATASET_TYPE(dataset) == 'multi-response':
+            question = line['question']
+            options = {
+                cand: line[cand]
+                for cand in string.ascii_uppercase
+                if cand in line and not pd.isna(line[cand])
+            }
+            options_prompt = 'Options:\n'
+            for key, item in options.items():
+                options_prompt += f'{key}. {item}\n'
+            hint = line['hint'] if ('hint' in line and not pd.isna(line['hint'])) else None
+            prompt = ''
+            if hint is not None:
+                prompt += f'Hint: {hint}\n'
+            prompt += f'Question: {question}\n'
+            if len(options):
+                prompt += options_prompt
+                prompt += 'Please select all correct answers from the options above. Note that there is more than one correct answer. Please output the answer options directly, separated by commas. For example :A,B\n'
         elif DATASET_TYPE(dataset) == 'VQA':
             if listinstr(['ocrvqa', 'textvqa', 'chartqa', 'docvqa'], dataset.lower()):
                 prompt += '\nPlease try to answer the question with short words or phrases if possible\n.'

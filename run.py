@@ -106,7 +106,7 @@ def main():
             if args.judge is not None:
                 judge_kwargs['model'] = args.judge
             else:
-                if DATASET_TYPE(dataset_name) in ['multi-choice', 'Y/N']:
+                if DATASET_TYPE(dataset_name) in ['multi-choice', 'multi-response', 'Y/N']:
                     judge_kwargs['model'] = 'chatgpt-0613'
                 elif listinstr(['MMVet', 'MathVista', 'LLaVABench'], dataset_name):
                     judge_kwargs['model'] = 'gpt-4-turbo'
@@ -122,13 +122,17 @@ def main():
                         result_file,
                         dataset=dataset_name,
                         **judge_kwargs)
-
+                elif DATASET_TYPE(dataset_name) == 'multi-response':
+                    dataset_name = 'default' if custom_flag else dataset_name
+                    multiple_response_eval(
+                        result_file,
+                        dataset=dataset_name,
+                        **judge_kwargs)
                 elif DATASET_TYPE(dataset_name) == 'Y/N':
                     YOrN_eval(
                         result_file,
                         dataset=dataset_name,
                         **judge_kwargs)
-
                 elif DATASET_TYPE(dataset_name) == 'Caption':
                     COCO_eval(result_file)
                 elif dataset_name == 'MMVet':
