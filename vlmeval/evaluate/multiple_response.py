@@ -48,7 +48,7 @@ def build_prompt(question, options, prediction):
     tmpl = (
         'You are an AI assistant specifically designed to help match the answer to a question with the provided options.'
         'In this task, you will get: a specific question, several different options, and multiple answers. Your main task is to identify which options are most closely related to the answer.'
-        'Note: Please note the capital letters in your answers.'
+        'Note: Please note the capital letters in your answers; If the answer already meets the requirements, has only uppercase letters, and is separated by ",", the output is as is.'
         'What you need to output is the uppercase label for the option that matches the answer, separated by commas ",", and in alphabetical order, such as "A,B,C", "B,C", "A,C,D", "A,B,C,D" (if these are the matching options), or "Z". Be careful not to print out superfluous text.'
         'Example 1:'
         'Question: What is most suitable for outdoor activities in summer?\nOptions: A. Sunbathing B. Skiing C. Bonfire D. Swimming pool\nAnswer: Swimming and sunbathing\nOutput: A,D\n'
@@ -64,7 +64,7 @@ def build_prompt_cn(question, options, prediction):
     tmpl = (
         '你是一个专门帮助匹配问题答案与提供的选项的 AI 助手。'
         '在这个任务中，你将获得：一个具体问题，几个不同的选项，以及多个答案。你的主要任务是识别出哪些选项与答案内容最为接近。'
-        '提示：请你注意答案中的大写字母。'
+        '提示：请你注意答案中的大写字母；如果答案已经满足要求，只有大写字母，并且用","分开，则原样输出'
         '你需要输出的是与答案匹配的选项的大写字母标签，字母之间用逗号 "," 隔开，按照字母顺序排列，如 "A,B,C"、"B,C"、"A,C,D"、"A,B,C,D"（如果这些是符合的选项），或者 "Z"。请注意，不要输出多余的文本。'
         '例 1:'
         '问题: 最适合夏日户外活动的是什么?\n选项: A. 日光浴 B. 滑雪 C. 篝火 D. 泳池\n答案: 游泳和日光浴\n输出: A,D\n'
