@@ -115,9 +115,9 @@ def eval_sub_data(model, sub_data, answer_map):
         res = extract_answer_from_item(model, sub_data.iloc[i])
         opt, match_log = res['opt'].strip(), res['log'].strip()
 
-        opt = ''.join(sorted(set(opt.replace(',', ''))))
+        opt = ''.join(sorted(set(opt.replace(',', '').replace(' ', ''))))
         index = sub_data.iloc[i]['index']  # 使用 'index' 列作为唯一标识符
-        answer_map[index] = ''.join(sorted(set(answer_map[index].replace(',', ''))))
+        answer_map[index] = ''.join(sorted(set(answer_map[index].replace(',', '').replace(' ', ''))))
         
 
         if opt != answer_map[index]:
